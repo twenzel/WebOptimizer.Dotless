@@ -37,4 +37,3 @@ deploy:
       secure: $($env:NuGetKey)
     on:
       branch: master
-      appveyor_repo_commit_message_extended: /\[release\]/
