@@ -1,6 +1,14 @@
 image: Visual Studio 2017
 version: 1.0.{build}
 
+branches:
+  # Whitelist
+  only:
+    - develop
+    - master
+    - /release/.*/
+    - /hotfix/.*/
+
 install:
    # .NET Core SDK binaries
   - ps: $urlCurrent = "https://aka.ms/dotnet-sdk-2.0.0-win-x64"
