@@ -19,7 +19,7 @@ namespace WebOptimizer.Dotless.Test
             asset.CompileLess();
 
             Assert.Equal(1, asset.Processors.Count);
-            Assert.True(asset.Processors.Any(p => p is Compiler));
+            Assert.Contains(asset.Processors, p => p is Compiler);
         }
 
         [Fact]
@@ -32,7 +32,7 @@ namespace WebOptimizer.Dotless.Test
             foreach (IAsset asset in assets)
             {
                 Assert.Equal(1, asset.Processors.Count);
-                Assert.True(asset.Processors.Any(p => p is Compiler));
+                Assert.Contains(asset.Processors, p => p is Compiler);
             }
         }
 

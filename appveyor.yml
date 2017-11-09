@@ -1,6 +1,14 @@
 image: Visual Studio 2017
 version: 1.0.{build}
 
+branches:
+  # Whitelist
+  only:
+    - develop
+    - master
+    - /release/.*/
+    - /hotfix/.*/
+
 install:
    # .NET Core SDK binaries
   - ps: $urlCurrent = "https://aka.ms/dotnet-sdk-2.0.0-win-x64"
@@ -13,7 +21,7 @@ install:
 
 build_script:
   - dotnet restore -v quiet
-  - ps: dotnet build /p:configuration=Release /p:Version=$($env:appveyor_build_version)-beta
+  - ps: dotnet build /p:configuration=Release /p:Version=$($env:appveyor_build_version)
 
 test_script:
   - dotnet test test/WebOptimizer.Dotless.Test.csproj
