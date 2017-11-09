@@ -26,7 +26,7 @@ deploy:
   - provider: NuGet
     artifact: /NuGet/
     api_key:
-      secure: {NuGetKey}
+      secure: $($env:NuGetKey)
     on:
       branch: master
       appveyor_repo_commit_message_extended: /\[release\]/
