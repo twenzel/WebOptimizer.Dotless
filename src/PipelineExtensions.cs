@@ -55,7 +55,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="pipeline">The asset pipeline.</param>
         public static IEnumerable<IAsset> CompileLessFiles(this IAssetPipeline pipeline)
         {
-            return pipeline.AddFiles("text/css; charset=UTF-8", "**/*.scss")
+            return pipeline.AddFiles("text/css; charset=UTF-8", "**/*.less")
                            .CompileLess()
                            .FingerprintUrls()
                            .MinifyCss();
