@@ -5,9 +5,6 @@
 
 This package compiles LESS files into CSS by hooking into the [LigerShark.WebOptimizer](https://github.com/ligershark/WebOptimizer) pipeline.
 
-## Caution
-Due to the lack of .NET Core/Standard support of the dotless package this extension for the [LigerShark.WebOptimizer](https://github.com/ligershark/WebOptimizer) pipeline is currently running on .NET Framework only.
-
 ## Install
 Add the NuGet package [codeessentials.WebOptimizer.Dotless](https://nuget.org/packages/codeessentials.WebOptimizer.Dotless/) to any ASP.NET Core project supporting .NET Standard 2.0 or higher.
 
@@ -28,6 +25,7 @@ public void ConfigureServices(IServiceCollection services)
     });
 }
 ```
+
 ...and add `app.UseWebOptimizer()` to the `Configure` method anywhere before `app.UseStaticFiles`, like so:
 
 ```csharp

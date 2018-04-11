@@ -18,7 +18,6 @@ namespace WebOptimizer.Dotless.Test
         public async Task Compile_Success()
         {
             var processor = new Compiler();
-            var pipeline = new Mock<IAssetPipeline>().SetupAllProperties();
             var context = new Mock<IAssetContext>().SetupAllProperties();
             var asset = new Mock<IAsset>().SetupAllProperties();
             var env = new Mock<IHostingEnvironment>();
@@ -48,12 +47,10 @@ namespace WebOptimizer.Dotless.Test
             Assert.Equal("* {\n  margin: 1px;\n}", result.AsString().Trim());
         }
 
-
         [Fact]
         public async Task Compile_With_Imports_Success()
         {
             var processor = new Compiler();
-            var pipeline = new Mock<IAssetPipeline>().SetupAllProperties();
             var context = new Mock<IAssetContext>().SetupAllProperties();
             var asset = new Mock<IAsset>().SetupAllProperties();
             var env = new Mock<IHostingEnvironment>();
@@ -66,7 +63,7 @@ namespace WebOptimizer.Dotless.Test
             var inputFile = new PhysicalFileInfo(new FileInfo(path));
 
             context.Object.Content = new Dictionary<string, byte[]> {
-                { "/file.less", "@import \"bar\"; @foo: 1px; * {margin: @foo}".AsByteArray() }                
+                { "/file.less", "@import \"bar\"; @foo: 1px; * {margin: @foo}".AsByteArray() }
             };
 
             context.Setup(s => s.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)))
