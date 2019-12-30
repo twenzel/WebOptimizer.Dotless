@@ -1,13 +1,10 @@
 ﻿using dotless.Core;
-using dotless.Core.Loggers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WebOptimizer.Dotless
@@ -29,7 +26,7 @@ namespace WebOptimizer.Dotless
         public Task ExecuteAsync(IAssetContext context)
         {
             var content = new Dictionary<string, byte[]>();
-            var env = (IHostingEnvironment)context.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment));
+            var env = context.HttpContext.RequestServices.GetRequiredService<IWebHostEnvironment>();
             IFileProvider fileProvider = context.Asset.GetFileProvider(env);
 
             var engine = new EngineFactory().GetEngine();
@@ -37,9 +34,9 @@ namespace WebOptimizer.Dotless
             foreach (string route in context.Content.Keys)
             {
                 IFileInfo file = fileProvider.GetFileInfo(route);
-                                               
+
                 engine.CurrentDirectory = Path.GetDirectoryName(file.PhysicalPath);
-                var css = engine.TransformToCss(context.Content[route].AsString(), null);               
+                var css = engine.TransformToCss(context.Content[route].AsString(), null);
 
                 content[route] = System.Text.Encoding.UTF8.GetBytes(css);
             }
@@ -48,5 +45,5 @@ namespace WebOptimizer.Dotless
 
             return Task.CompletedTask;
         }
-    }   
+    }
 }
