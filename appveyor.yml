@@ -1,5 +1,5 @@
-image: Visual Studio 2017
-version: 1.0.{build}
+image: Visual Studio 2019
+version: 3.0.{build}
 
 branches:
   # Whitelist
@@ -11,7 +11,7 @@ branches:
 
 install:
    # .NET Core SDK binaries
-  - ps: $urlCurrent = "https://aka.ms/dotnet-sdk-2.0.0-win-x64"
+  - ps: $urlCurrent = "https://download.visualstudio.microsoft.com/download/pr/639f7cfa-84f8-48e8-b6c9-82634314e28f/8eb04e1b5f34df0c840c1bffa363c101/dotnet-sdk-3.1.100-win-x64.exe"
   - ps: $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetsdk"
   - ps: mkdir $env:DOTNET_INSTALL_DIR -Force | Out-Null
   - ps: $tempFileCurrent = [System.IO.Path]::GetTempFileName()
@@ -34,6 +34,6 @@ deploy:
   - provider: NuGet
     artifact: /NuGet/
     api_key:
-      secure: xFkbZspx5hGOQ60cBdK3aP6W0iO0k+g8BfH0lQdfuOnIrf41nYJX475mSBN2US4s
+      secure: 9grNo0z7Ux+wna2jenBbzZ+WbojcFSbffe2vi/cJiw4w6owxU3kEC8ZVlZpR5WLW
     on:
       branch: master

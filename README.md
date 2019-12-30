@@ -5,10 +5,23 @@
 
 This package compiles LESS files into CSS by hooking into the [LigerShark.WebOptimizer](https://github.com/ligershark/WebOptimizer) pipeline.
 
+## Versions
+Master (Version >= 3.0) is being updated for ```ASP.NET Core 3.x```.
+
+For ```ASP.NET Core 2.x```, use the latest 1.0.10 [Tag](https://github.com/twenzel/WebOptimizer.Dotless/tree/v1.0.10) or [NuGet Package](https://www.nuget.org/packages/codeessentials.WebOptimizer.Dotless/1.0.10).
+
 ## Install
 Add the NuGet package [codeessentials.WebOptimizer.Dotless](https://nuget.org/packages/codeessentials.WebOptimizer.Dotless/) to any ASP.NET Core project supporting .NET Standard 2.0 or higher.
 
 > &gt; dotnet add package codeessentials.WebOptimizer.Dotless
+
+### Versions
+Version|Support
+-|-
+ >= 3.x|ASP.Net Core 3.0 and above
+<= 1.0.10|netstandard2.0 (ASP.NET Core 2.x)
+
+
 
 ## Usage
 Here's an example of how to compile `a.less` and `b.less` from inside the wwwroot folder and bundle them into a single .css file called `/all.css`:
