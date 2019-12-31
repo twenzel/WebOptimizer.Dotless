@@ -20,5 +20,6 @@ jobs:
       with:
         target: Publish
         cake-version: 0.35.0
+        cake-bootstrap: true
       env: 
         nugetApiKey: ${{ secrets.nugetApiKey }}  
