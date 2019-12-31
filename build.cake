@@ -1,9 +1,7 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
 
 var target = Argument("target", "Default");
-var branch = Argument("branch", "");
-var pullRequestNumber = Argument("pullRequestNumber", "");
-var nugetApiKey = Argument("nugetApiKey", "");
+var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
 
 //////////////////////////////////////////////////////////////////////
 //    Build Variables
