@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v1
@@ -17,3 +17,4 @@ jobs:
       uses: ecampidoglio/cake-action@v1.1.1
       with:
         target: Pack
+        cake-version: 0.35.0
