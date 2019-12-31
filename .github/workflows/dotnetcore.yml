@@ -1,4 +1,4 @@
-name: .NET Core
+name: Build
 
 on: [push]
 
@@ -17,3 +17,5 @@ jobs:
       uses: ecampidoglio/cake-action@v1.1.1
       with:
         target: Pack
+      env: 
+        nugetApiKey: ${{ secrets.nugetApiKey }}  
