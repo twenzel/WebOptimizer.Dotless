@@ -5,7 +5,7 @@ using WebOptimizer.Dotless;
 namespace Microsoft.Extensions.DependencyInjection
 {
     /// <summary>
-    /// Extensions methods for registrating the Less compiler on the Asset Pipeline.
+    /// Extensions methods for registration the Less compiler on the Asset Pipeline.
     /// </summary>
     public static class PipelineExtensions
     {

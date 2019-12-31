@@ -20,7 +20,7 @@ namespace WebOptimizer.Dotless.Test
             var processor = new Compiler();
             var context = new Mock<IAssetContext>().SetupAllProperties();
             var asset = new Mock<IAsset>().SetupAllProperties();
-            var env = new Mock<IHostingEnvironment>();
+            var env = new Mock<IWebHostEnvironment>();
             var fileProvider = new Mock<IFileProvider>();
 
             var inputFile = new PhysicalFileInfo(new FileInfo("foo.less"));
@@ -29,7 +29,7 @@ namespace WebOptimizer.Dotless.Test
                 { "/file.less", "@foo: 1px; * {margin: @foo}".AsByteArray() },
             };
 
-            context.Setup(s => s.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)))
+            context.Setup(s => s.HttpContext.RequestServices.GetService(typeof(IWebHostEnvironment)))
                   .Returns(env.Object);
 
             context.SetupGet(s => s.Asset)
@@ -53,7 +53,7 @@ namespace WebOptimizer.Dotless.Test
             var processor = new Compiler();
             var context = new Mock<IAssetContext>().SetupAllProperties();
             var asset = new Mock<IAsset>().SetupAllProperties();
-            var env = new Mock<IHostingEnvironment>();
+            var env = new Mock<IWebHostEnvironment>();
             var fileProvider = new Mock<IFileProvider>();
 
             string temp = Path.GetTempPath();
@@ -66,7 +66,7 @@ namespace WebOptimizer.Dotless.Test
                 { "/file.less", "@import \"bar\"; @foo: 1px; * {margin: @foo}".AsByteArray() }
             };
 
-            context.Setup(s => s.HttpContext.RequestServices.GetService(typeof(IHostingEnvironment)))
+            context.Setup(s => s.HttpContext.RequestServices.GetService(typeof(IWebHostEnvironment)))
                   .Returns(env.Object);
 
             context.SetupGet(s => s.Asset)
