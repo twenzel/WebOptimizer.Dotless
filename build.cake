@@ -1,4 +1,5 @@
 #tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
+#tool "nuget:?package=nuget.commandline&version=5.3.0"
 
 var target = Argument("target", "Default");
 var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
