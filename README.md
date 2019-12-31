@@ -1,6 +1,5 @@
 # A LESS compiler for ASP.NET Core using dotless
 
-[![Build status](https://ci.appveyor.com/api/projects/status/8mh9woxgm5x8l4uw?svg=true)](https://ci.appveyor.com/project/twenzel/weboptimizer-dotless)
 [![NuGet](https://img.shields.io/nuget/v/codeessentials.WebOptimizer.Dotless.svg)](https://nuget.org/packages/codeessentials.WebOptimizer.Dotless/)
 
 This package compiles LESS files into CSS by hooking into the [LigerShark.WebOptimizer](https://github.com/ligershark/WebOptimizer) pipeline.
