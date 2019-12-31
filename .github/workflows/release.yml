@@ -1,14 +1,13 @@
 name: Release
 
 on:
-  release:
-    # Only use the types keyword to narrow down the activity types that will trigger your workflow.
+  release:    
     types: [published, created, edited]
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v1
@@ -20,5 +19,6 @@ jobs:
       uses: ecampidoglio/cake-action@v1.1.1
       with:
         target: Publish
+        cake-version: 0.35.0
       env: 
         nugetApiKey: ${{ secrets.nugetApiKey }}  
