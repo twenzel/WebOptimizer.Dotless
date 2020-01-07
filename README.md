@@ -17,9 +17,8 @@ Add the NuGet package [codeessentials.WebOptimizer.Dotless](https://nuget.org/pa
 ### Versions
 Version|Support
 -|-
- >= 3.x|ASP.Net Core 3.0 and above
-<= 1.0.10|netstandard2.0 (ASP.NET Core 2.x)
-
+&gt;= 3.x|ASP.Net Core 3.0 and above
+&lt;= 1.0.10|netstandard2.0 (ASP.NET Core 2.x)
 
 
 ## Usage
