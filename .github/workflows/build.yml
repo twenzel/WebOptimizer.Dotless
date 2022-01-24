@@ -23,4 +23,4 @@ jobs:
     - name: run cake
       uses: ecampidoglio/cake-action@v1
       with:
-        target: Pack
+        target: Test
