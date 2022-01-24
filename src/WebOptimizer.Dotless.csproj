@@ -5,7 +5,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageTags>less, bundle, minify, optimize, asp.net core, dotless</PackageTags>
-    <Version>$(SemVer)</Version>
     <Authors>Toni Wenzel</Authors>
     <Description>Compiles Less files for the LigerShark.WebOptimizer.Core system.</Description>
     <Copyright>Copyright © Toni Wenzel</Copyright>
