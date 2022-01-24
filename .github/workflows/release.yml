@@ -10,11 +10,16 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout the repository
+      uses: actions/checkout@v2
       
-    - name: Setup .NET Core
+    - name: Fetch all tags and branches
+      run: git fetch --prune --unshallow
+        
+    - name: Install .NET SDK
       uses: actions/setup-dotnet@v1
       with:
+        # gitversion needs 5.0 and we need all SDKs the project is targeting
         dotnet-version: | 
           3.1.x
           5.0.x
