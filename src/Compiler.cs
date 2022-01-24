@@ -1,4 +1,5 @@
-﻿using dotless.Core;
+﻿using System;
+using dotless.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +19,7 @@ namespace WebOptimizer.Dotless
         /// <summary>
         /// Gets the custom key that should be used when calculating the memory cache key.
         /// </summary>
-        public string CacheKey(HttpContext context) => string.Empty;
+        public string CacheKey(HttpContext context, IAssetContext config) => String.Empty;
 
         /// <summary>
         /// Executes the processor on the specified configuration.
@@ -45,5 +46,8 @@ namespace WebOptimizer.Dotless
 
             return Task.CompletedTask;
         }
+
+        
+        
     }
 }
