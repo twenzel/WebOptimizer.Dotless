@@ -1,5 +1,5 @@
-#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
-#tool "nuget:?package=nuget.commandline&version=5.3.0"
+#tool "dotnet:?package=GitVersion.Tool&version=5.8.1"
+#tool "nuget:?package=NuGet.CommandLine&version=5.11.0"
 
 var target = Argument("target", "Default");
 var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
@@ -9,9 +9,13 @@ var nugetApiKey = Argument("nugetApiKey", EnvironmentVariable("nugetApiKey"));
 /////////////////////////////////////////////////////////////////////
 var solution = "./WebOptimizer.Dotless.sln";
 var project = "./src/WebOptimizer.Dotless.csproj";
-var outputDir = "./buildArtifacts/";
-var outputDirNuget = outputDir+"NuGet/";
-var testResultsPath = System.IO.Path.Combine(System.IO.Path.GetFullPath(outputDir), "TestResults.xml");
+var outputDirRoot = new DirectoryPath("./buildArtifacts/").MakeAbsolute(Context.Environment);
+var outputDirPublished = outputDirRoot.Combine("Published");
+var outputDirTemp = outputDirRoot.Combine("Temp");
+var packageOutputDir = outputDirPublished.Combine("Package");
+
+var outputDirTests = outputDirTemp.Combine("Tests/");
+
 var nugetPublishFeed = "https://api.nuget.org/v3/index.json";
 
 
@@ -23,14 +27,12 @@ Task("Clean")
 	.Description("Removes the output directory")
 	.Does(() => {
 	  
-	if (DirectoryExists(outputDir))
-	{
-		DeleteDirectory(outputDir, new DeleteDirectorySettings {
+	EnsureDirectoryDoesNotExist(outputDirRoot, new DeleteDirectorySettings {
 			Recursive = true,
 			Force = true
-		});
-	}
-	CreateDirectory(outputDir);
+		});	
+	CreateDirectory(outputDirRoot);
+	CreateDirectory(outputDirPublished);
 });
 
 GitVersion versionInfo = null;
@@ -50,48 +52,41 @@ Task("Build")
 	.IsDependentOn("Version")
 	.Does(() => {
 		
-		var settings = new DotNetCoreBuildSettings {        
-			Configuration = "Release",		
-			ArgumentCustomization = args => args.Append("/p:SemVer=" + versionInfo.NuGetVersionV2 + " /p:SourceLinkCreate=true")
-		};
+		var msBuildSettings = new DotNetMSBuildSettings()
+		{
+			Version =  versionInfo.AssemblySemVer,
+			InformationalVersion = versionInfo.InformationalVersion,
+			PackageVersion = versionInfo.NuGetVersionV2
+		}.WithProperty("PackageOutputPath", packageOutputDir.FullPath);	
 
-		DotNetCoreBuild(project, settings);			
+		var settings = new DotNetBuildSettings {
+			Configuration = "Release",			
+			MSBuildSettings = msBuildSettings
+		};	 		
+	 
+		DotNetBuild(project, settings);				
 	});
 
 Task("Test")
 	.IsDependentOn("Build")
 	.Does(() =>
 	{
-		var settings = new DotNetCoreTestSettings {
-			Logger = "trx;logfilename=" + testResultsPath
+		var settings = new DotNetTestSettings {
+			Loggers = new[]{"trx;"},
+			ResultsDirectory = outputDirTests,
+			NoBuild = true
 		};				
 				
-		DotNetCoreTest("./test/WebOptimizer.Dotless.Test.csproj", settings);		
-	});
-
-
-Task("Pack")
-	.IsDependentOn("Test")
-	.IsDependentOn("Version")
-	.Does(() => {
-		
-		var packSettings = new DotNetCorePackSettings
-		{			
-			Configuration = "Release",
-			OutputDirectory = outputDirNuget,
-			ArgumentCustomization = args => args.Append("/p:PackageVersion=" + versionInfo.NuGetVersionV2+ " /p:SourceLinkCreate=true")
-		};
-		 
-		DotNetCorePack(project, packSettings);			
+		DotNetTest("./test/WebOptimizer.Dotless.Test.csproj", settings);		
 	});
 	
 Task("Publish")	
-	.IsDependentOn("Pack")	
+	.IsDependentOn("Test")	
 	.Description("Pushes the created NuGet packages to nuget.org")  
 	.Does(() => {
 	
 		// Get the paths to the packages.
-		var packages = GetFiles(outputDirNuget + "*.nupkg");
+		var packages = GetFiles(packageOutputDir.CombineWithFilePath("*.nupkg").FullPath);
 
 		// Push the package.
 		NuGetPush(packages, new NuGetPushSettings {
