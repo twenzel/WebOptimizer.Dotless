@@ -1,7 +1,17 @@
 name: Build & Test
 
-on: [push, pull_request]
-
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - main
+    tags:
+      - "*"
+    paths-ignore:
+      - "README.md"
+  pull_request:
+  
 jobs:
   build:
 
