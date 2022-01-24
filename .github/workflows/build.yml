@@ -1,20 +1,42 @@
 name: Build & Test
 
-on: [push, pull_request]
-
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - main
+    tags:
+      - "*"
+    paths-ignore:
+      - "README.md"
+  pull_request:
+  
 jobs:
   build:
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-18.04, macos-latest]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+        
+    - name: Fetch all tags and branches
+      run: git fetch --prune --unshallow
+        
+    - name: Install .NET SDK
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.100
+        # gitversion needs 5.0 and we need all SDKs the project is targeting
+        dotnet-version: | 
+          3.1.x
+          5.0.x
+          6.0.x
+        
     - name: run cake
-      uses: ecampidoglio/cake-action@v1.1.1
+      uses: ecampidoglio/cake-action@v1
       with:
-        target: Pack
-        cake-version: 0.35.0
+        target: Test
